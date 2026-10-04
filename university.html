@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Inspection — EduSeek India</title>
+  <meta name="description" content="Detailed accreditation, fee structures, LMS review, placement records, and UGC-DEB status of India's top online universities.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#243151',
+            beige: '#ddddd3',
+            charcoal: '#262a2d',
+            offwhite: '#f4f3ee',
+            lavender: '#a99cf5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-charcoal text-offwhite antialiased selection:bg-lavender selection:text-navy">
+
+  <!-- ========================================================================
+       SHARED HEADER
+       ======================================================================== -->
+  <header id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/10 bg-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Left: Logo in a thin-bordered box -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 border border-white/30 rounded flex items-center justify-center font-bold tracking-widest text-sm bg-navy group-hover:border-lavender group-hover:text-lavender transition-colors">
+            ES
+          </div>
+          <div>
+            <span class="text-xl font-bold tracking-wider uppercase text-offwhite block">EDUSEEK</span>
+            <span class="text-[9px] tracking-widest uppercase text-lavender block -mt-1 font-medium">DISCOVERY ✦ COMPARE</span>
+          </div>
+        </a>
+
+        <!-- Center: Nav links -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="index.html#discoveryPath" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">EXPLORE DEGREES</a>
+          <a href="index.html#marketplace" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">FIND & FILTER</a>
+          <a href="university.html" class="label-tracking text-lavender font-bold transition-colors">UNIVERSITIES</a>
+          <a href="programme.html" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">PROGRAMMES</a>
+          <a href="index.html#regulations" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">UGC NORMS</a>
+        </nav>
+
+        <!-- Right: Outlined Action Buttons -->
+        <div class="flex items-center gap-3">
+          <button id="navCompareBtn" class="btn-outline-light px-3.5 py-2 rounded text-xs label-tracking flex items-center gap-2">
+            <span>COMPARE</span>
+            <span id="navCompareCount" class="w-4 h-4 rounded-full bg-lavender text-navy text-[10px] font-bold flex items-center justify-center">0</span>
+          </button>
+          
+          <button onclick="openLeadModal('University Direct Desk', currentUniv ? currentUniv.name : '')" class="hidden sm:inline-flex btn-solid-lavender px-4 py-2 rounded text-xs label-tracking">
+            APPLY NOW
+          </button>
+
+          <button id="mobileMenuBtn" class="md:hidden text-offwhite/80 hover:text-white p-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       UNIVERSITY SWITCHER QUICK BAR (AGGREGATOR FEEL)
+       ======================================================================== -->
+  <div class="pt-24 pb-4 bg-navy border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2 text-white/60">
+        <span class="label-tracking-sm text-lavender">SELECT UNIVERSITY TO INSPECT:</span>
+      </div>
+      <div class="flex items-center gap-2 overflow-x-auto pb-1" id="univSwitcherBar">
+        <!-- University pills inserted dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       HERO BANNER — Name, Logo, Location, Accreditation, Quick CTAs
+       In Navy (#243151)
+       ======================================================================== -->
+  <section class="relative pt-12 pb-16 bg-navy border-b border-white/10 overflow-hidden">
+    <!-- Background Campus Imagery with gradient -->
+    <div class="absolute inset-0 z-0 opacity-20">
+      <img id="univBannerImg" src="" alt="University Campus" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/90 to-navy/70"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Credentials Badges -->
+      <div class="flex flex-wrap items-center gap-2 mb-6" id="univHeaderApprovals">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <div class="lg:col-span-8">
+          <div class="flex items-start gap-4 mb-4">
+            <div id="univLogoBox" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-charcoal border border-white/20 text-white font-bold text-2xl sm:text-3xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              MU
+            </div>
+            <div>
+              <h1 id="univTitle" class="text-3xl sm:text-4xl md:text-5xl font-light text-white leading-tight">
+                Manipal University Jaipur (Online)
+              </h1>
+              <p id="univMeta" class="text-xs sm:text-sm text-white/70 mt-1 flex items-center gap-3">
+                <span>📍 Jaipur, Rajasthan</span> • <span>Estd. 2011</span> • <span class="text-amber-300">★ 4.6 (1,420 Verified Reviews)</span>
+              </p>
+            </div>
+          </div>
+
+          <p id="univOverviewShort" class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-3xl mb-8">
+            Manipal University Jaipur brings the legacy of the prestigious Manipal Group directly to working professionals across India. Offering state-of-the-art LMS, live weekend masterclasses, bundled Coursera credentials, and an active alumni network of 100,000+ graduates.
+          </p>
+
+          <!-- Action Button Strip -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openLeadModal('University Admission', currentUniv.name)" class="btn-solid-lavender px-6 py-3 rounded text-xs label-tracking">
+              APPLY FOR ADMISSION
+            </button>
+            <button onclick="openLeadModal('Brochure Request', currentUniv.name)" class="btn-outline-light px-5 py-3 rounded text-xs label-tracking">
+              DOWNLOAD SYLLABUS PDF
+            </button>
+            <button id="univAddCompareBtn" onclick="handleUnivCompareClick()" class="btn-outline-light px-5 py-3 rounded text-xs label-tracking flex items-center gap-2">
+              <span>+ ADD TO COMPARE</span>
+            </button>
+            <button onclick="openLeadModal('Expert Guidance', currentUniv.name)" class="btn-outline-light px-5 py-3 rounded text-xs label-tracking">
+              TALK TO AN EXPERT
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Quick Stat Snapshot Card -->
+        <div class="lg:col-span-4 bg-charcoal-card/90 backdrop-blur border border-white/15 rounded-2xl p-6 shadow-2xl">
+          <div class="text-[11px] uppercase tracking-wider text-lavender font-bold mb-4 pb-2 border-b border-white/10">
+            OFFICIAL BENCHMARK SCORECARD
+          </div>
+
+          <div class="space-y-4 text-xs">
+            <div class="flex justify-between items-center pb-2 border-b border-white/5">
+              <span class="text-white/60">UGC Recognition</span>
+              <span class="font-bold text-emerald-400">100% Entitled (UGC-DEB)</span>
+            </div>
+            <div class="flex justify-between items-center pb-2 border-b border-white/5">
+              <span class="text-white/60">NAAC Accreditation</span>
+              <span id="univNaacStat" class="font-bold text-white">NAAC A+ (3.28 CGPA)</span>
+            </div>
+            <div class="flex justify-between items-center pb-2 border-b border-white/5">
+              <span class="text-white/60">NIRF Ranking</span>
+              <span id="univNirfStat" class="font-bold text-white">Top 70 in India</span>
+            </div>
+            <div class="flex justify-between items-center pb-2 border-b border-white/5">
+              <span class="text-white/60">Average Placement CTC</span>
+              <span id="univAvgCtc" class="font-bold text-emerald-300">₹7.50 LPA</span>
+            </div>
+            <div class="flex justify-between items-center pb-2 border-b border-white/5">
+              <span class="text-white/60">Highest Package</span>
+              <span id="univHighestCtc" class="font-bold text-lavender">₹18.00 LPA</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-white/60">Examination Mode</span>
+              <span class="font-semibold text-white/90">Remote AI-Proctored</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       STICKY SUB-NAVIGATION TABS
+       Overview, Approvals, Programmes, Fees, Admission, Learning, Placements, Reviews, FAQs
+       ======================================================================== -->
+  <div class="sticky-subnav bg-navy/95 border-b border-white/15 px-4">
+    <div class="max-w-7xl mx-auto flex items-center gap-1 overflow-x-auto py-2">
+      <a href="#tab-overview" class="tab-pill active">OVERVIEW</a>
+      <a href="#tab-approvals" class="tab-pill">APPROVALS & RANKING</a>
+      <a href="#tab-programmes" class="tab-pill">ONLINE PROGRAMMES & FEES</a>
+      <a href="#tab-admission" class="tab-pill">ADMISSION PROCESS</a>
+      <a href="#tab-learning" class="tab-pill">LMS & FACULTY</a>
+      <a href="#tab-placements" class="tab-pill">PLACEMENTS & RECRUITERS</a>
+      <a href="#tab-reviews" class="tab-pill">STUDENT REVIEWS</a>
+      <a href="#tab-compare" class="tab-pill">COMPARE ALTERNATIVES</a>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       TAB SECTION 1: OVERVIEW & KEY STATS
+       In Warm Beige (#ddddd3)
+       ======================================================================== -->
+  <section id="tab-overview" class="bg-beige text-charcoal py-20 border-b border-charcoal/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-8">
+          <span class="label-tracking text-navy/70 block mb-2">INSTITUTIONAL PROFILE</span>
+          <h2 class="font-display-mid text-charcoal mb-6">About the University</h2>
+          <div id="univFullOverview" class="text-sm text-charcoal/80 space-y-4 leading-relaxed">
+            <!-- Dynamic overview paragraphs -->
+          </div>
+
+          <div class="mt-8 p-6 bg-white/70 rounded-xl border border-charcoal/15">
+            <h4 class="text-xs uppercase tracking-wider font-bold text-navy mb-2">Degree Legal Equivalence Status</h4>
+            <p id="univEquivalenceText" class="text-xs text-charcoal/70 leading-relaxed">
+              Degrees awarded by this university in online mode are legally valid for all Central and State Government examinations including UPSC, SSC, Banking, and State PSCs under the UGC Notification 2020.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="bg-white rounded-2xl p-6 border border-charcoal/15 shadow-sm space-y-6">
+            <h3 class="label-tracking text-navy">AT A GLANCE</h3>
+            
+            <div class="space-y-4 text-xs">
+              <div>
+                <span class="text-charcoal/50 uppercase tracking-wider text-[10px] block">Accreditation</span>
+                <span id="sideNaac" class="font-bold text-charcoal text-sm">NAAC A+ (3.28 CGPA)</span>
+              </div>
+              <div>
+                <span class="text-charcoal/50 uppercase tracking-wider text-[10px] block">Corporate Acceptance</span>
+                <span class="font-semibold text-charcoal">WES Recognized (Accepted in US, Canada)</span>
+              </div>
+              <div>
+                <span class="text-charcoal/50 uppercase tracking-wider text-[10px] block">Learning Format</span>
+                <span class="font-semibold text-charcoal">Live Interactive Weekend Masterclasses + 24/7 Recorded</span>
+              </div>
+              <div>
+                <span class="text-charcoal/50 uppercase tracking-wider text-[10px] block">Fee Range</span>
+                <span id="sideFeeRange" class="font-bold text-navy text-sm">₹1,10,000 - ₹1,75,000</span>
+              </div>
+            </div>
+
+            <button onclick="openLeadModal('Quick Fee Enquiry', currentUniv.name)" class="w-full py-3 bg-navy hover:bg-navy-dark text-offwhite text-xs font-bold uppercase tracking-wider rounded transition">
+              REQUEST DETAILED FEE BREAKDOWN
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 2: RECOGNITION, ACCREDITATIONS & APPROVALS
+       In Navy (#243151)
+       ======================================================================== -->
+  <section id="tab-approvals" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="label-tracking text-lavender block mb-2">VERIFIED REGULATORY RECORD</span>
+        <h2 class="font-display-large text-offwhite">Accreditations & Government Entitlements</h2>
+        <p class="text-offwhite/60 text-sm mt-2">Every approval held by this university has been verified against the UGC-DEB public gazette for 2026.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="univApprovalsGrid">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 3: ONLINE PROGRAMMES OFFERED & DETAILED FEE TABLE
+       In Charcoal (#262a2d)
+       UG / PG Switcher, Programme-wise Fees, Duration, Eligibility Table
+       ======================================================================== -->
+  <section id="tab-programmes" class="bg-charcoal py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">COURSE DIRECTORY</span>
+          <h2 class="font-display-large text-offwhite">Accredited Online Programmes</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Inspect exact fees, 0% EMI installments, eligibility, and direct curriculum links for each offering.</p>
+        </div>
+
+        <!-- UG vs PG Switcher -->
+        <div class="flex items-center gap-2 mt-4 md:mt-0 bg-[#1b253e] p-1.5 rounded-xl border border-white/10">
+          <button id="univProgTabAll" onclick="setUnivProgFilter('ALL')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-lavender text-navy">All Courses</button>
+          <button id="univProgTabPG" onclick="setUnivProgFilter('PG')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white">Postgraduate (PG)</button>
+          <button id="univProgTabUG" onclick="setUnivProgFilter('UG')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white">Undergraduate (UG)</button>
+        </div>
+      </div>
+
+      <!-- EDITORIAL DATA TABLE -->
+      <div class="editorial-table-wrap bg-charcoal-card border border-white/10 rounded-2xl">
+        <table class="w-full text-left border-collapse min-w-[760px]">
+          <thead>
+            <tr class="border-b border-white/10 text-white/50 text-[11px] uppercase tracking-wider bg-white/5">
+              <th class="py-4 px-6">Programme</th>
+              <th class="py-4 px-4">Level & Duration</th>
+              <th class="py-4 px-4">Total Course Fee</th>
+              <th class="py-4 px-4">0% Monthly EMI</th>
+              <th class="py-4 px-6">Eligibility Criteria</th>
+              <th class="py-4 px-6 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="univProgrammesTableBody" class="divide-y divide-white/10 text-xs">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 4: ADMISSION PROCESS TIMELINE
+       In Warm Beige (#ddddd3)
+       ======================================================================== -->
+  <section id="tab-admission" class="bg-beige text-charcoal py-20 border-b border-charcoal/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="label-tracking text-navy/70 block mb-2">STREAMLINED ONBOARDING</span>
+        <h2 class="font-display-large text-charcoal">Step-by-Step Admission Process</h2>
+        <p class="text-charcoal/70 text-sm mt-2">100% digital admission with instant document verification via DigiLocker. No college visits required.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="univAdmissionTimeline">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 5: LEARNING EXPERIENCE, FACULTY & LMS
+       In Navy (#243151)
+       ======================================================================== -->
+  <section id="tab-learning" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6">
+          <span class="label-tracking text-lavender block mb-2">DIGITAL INFRASTRUCTURE</span>
+          <h2 class="font-display-large text-offwhite mb-6">World-Class LMS & Academic Delivery</h2>
+          <p class="text-offwhite/75 text-sm leading-relaxed mb-6">
+            Study via dedicated cloud student portals designed for working professionals. Learn on mobile or desktop with synchronized video lectures, downloadable offline notes, and weekly faculty mentorship hours.
+          </p>
+
+          <div class="space-y-4" id="univLmsFeaturesList">
+            <!-- LMS features populated by script -->
+          </div>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="bg-charcoal-card border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+              <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+              <span class="label-tracking text-white text-xs">EXAMINATION PROTOCOL</span>
+            </div>
+            
+            <h3 class="text-xl font-light text-white mb-3">AI & Human Remote Proctoring</h3>
+            <p class="text-xs text-white/70 leading-relaxed mb-6">
+              Semester exams are conducted completely online. You take examinations from home on weekends. Dual AI algorithms check screen activity, head movement, and ambient audio while certified human proctors oversee sessions in real-time.
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div class="p-4 rounded-xl bg-[#1b253e] border border-white/10">
+                <span class="text-lavender font-bold block mb-1">Weekend Scheduling</span>
+                <span class="text-white/60 text-[11px]">Flexible morning & afternoon examination slots to suit corporate shifts.</span>
+              </div>
+              <div class="p-4 rounded-xl bg-[#1b253e] border border-white/10">
+                <span class="text-lavender font-bold block mb-1">Instant Doubt Desk</span>
+                <span class="text-white/60 text-[11px]">Dedicated academic mentor responds to curriculum doubts within 4 hours.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 6: PLACEMENTS & RECRUITERS
+       In Charcoal (#262a2d)
+       ======================================================================== -->
+  <section id="tab-placements" class="bg-charcoal py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">CAREER SERVICES CELL</span>
+          <h2 class="font-display-large text-offwhite">Placements & Hiring Partners</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Virtual career fairs, CV polishing bootcamps, and direct job drives with India's leading MNCs.</p>
+        </div>
+
+        <div class="mt-4 md:mt-0 flex gap-6 text-right">
+          <div>
+            <span class="text-xs text-white/50 uppercase tracking-wider block">Average CTC</span>
+            <span id="placeAvgCtc" class="text-2xl font-light text-emerald-400">₹7.50 LPA</span>
+          </div>
+          <div>
+            <span class="text-xs text-white/50 uppercase tracking-wider block">Highest CTC</span>
+            <span id="placeHighCtc" class="text-2xl font-light text-lavender">₹18.00 LPA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recruiter Logos / Chips -->
+      <div class="bg-charcoal-card border border-white/10 rounded-2xl p-8 mb-10">
+        <h4 class="label-tracking text-white/60 mb-6 text-center">TOP CORPORATE RECRUITERS HIRING ONLINE GRADUATES</h4>
+        <div class="flex flex-wrap items-center justify-center gap-4" id="univRecruitersList">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 7: STUDENT REVIEWS & RATING BREAKDOWN
+       In Warm Beige (#ddddd3)
+       ======================================================================== -->
+  <section id="tab-reviews" class="bg-beige text-charcoal py-20 border-b border-charcoal/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <div class="lg:col-span-4">
+          <span class="label-tracking text-navy/70 block mb-2">STUDENT FEEDBACK</span>
+          <h2 class="font-display-mid text-charcoal mb-4">Verified Reviews</h2>
+          
+          <div class="bg-white p-6 rounded-2xl border border-charcoal/15 shadow-sm text-center mb-6">
+            <div id="reviewBigScore" class="text-5xl font-light text-navy mb-1">4.6</div>
+            <div class="text-amber-500 text-base mb-1">★★★★★</div>
+            <span id="reviewCountLabel" class="text-xs text-charcoal/60">Based on 1,420 Verified Reviews</span>
+
+            <!-- Rating Bars -->
+            <div class="mt-6 space-y-2 text-xs text-left">
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-charcoal/60">5 Star</span>
+                <div class="flex-1 h-2 bg-charcoal/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-navy rounded-full" style="width: 78%"></div>
+                </div>
+                <span class="w-8 text-right font-medium">78%</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-charcoal/60">4 Star</span>
+                <div class="flex-1 h-2 bg-charcoal/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-navy rounded-full" style="width: 16%"></div>
+                </div>
+                <span class="w-8 text-right font-medium">16%</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-charcoal/60">3 Star</span>
+                <div class="flex-1 h-2 bg-charcoal/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-navy rounded-full" style="width: 4%"></div>
+                </div>
+                <span class="w-8 text-right font-medium">4%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Authentic Review Cards -->
+        <div class="lg:col-span-8 space-y-6">
+          <div class="bg-white p-6 rounded-2xl border border-charcoal/15 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h4 class="text-sm font-bold text-charcoal">Vikramaditya Sengupta</h4>
+                <p class="text-xs text-charcoal/60">Online MBA Alumnus • Bengaluru</p>
+              </div>
+              <span class="text-amber-500 text-xs">★★★★★</span>
+            </div>
+            <p class="text-xs text-charcoal/80 leading-relaxed">
+              "The faculty engagement during the weekend sessions was beyond my expectations. Coursera Gold integration allowed me to complete 4 certifications for free while doing the MBA."
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-charcoal/15 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h4 class="text-sm font-bold text-charcoal">Harshita Sharma</h4>
+                <p class="text-xs text-charcoal/60">Online BBA Graduate • Delhi NCR</p>
+              </div>
+              <span class="text-amber-500 text-xs">★★★★★</span>
+            </div>
+            <p class="text-xs text-charcoal/80 leading-relaxed">
+              "Zero hassles in taking examinations from my laptop. The proctoring system was smooth, and the marksheet was dispatched within 25 days of the semester results announcement."
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 8: COMPARE WITH SIMILAR UNIVERSITIES
+       In Navy (#243151)
+       ======================================================================== -->
+  <section id="tab-compare" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">DECISION BENCHMARK</span>
+          <h2 class="font-display-large text-offwhite">Similar Accredited Universities</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Compare this university against other Category-1 or NAAC A++ institutions offering identical degrees.</p>
+        </div>
+        <button onclick="openCompareModal()" class="mt-4 md:mt-0 btn-solid-lavender px-5 py-2.5 rounded text-xs label-tracking">
+          OPEN FULL COMPARISON MATRIX
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="similarUnivGrid">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PERSISTENT BOTTOM ENQUIRY STRIP
+       ======================================================================== -->
+  <div class="bg-charcoal-dark border-t border-white/15 py-6 sticky bottom-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-lavender text-navy font-bold text-xs flex items-center justify-center" id="stickyBottomLogo">
+          MU
+        </div>
+        <div>
+          <span class="text-xs font-bold text-white block" id="stickyBottomTitle">Manipal University Jaipur</span>
+          <span class="text-[10px] text-white/60" id="stickyBottomFee">Fees: ₹1.1L - ₹1.75L • 0% EMI available</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <button id="stickyAddCompareBtn" onclick="handleUnivCompareClick()" class="flex-1 sm:flex-none btn-outline-light px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider">
+          + Compare
+        </button>
+        <button onclick="openLeadModal('Sticky University Apply', currentUniv.name)" class="flex-1 sm:flex-none btn-solid-lavender px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider">
+          APPLY / GET INFO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SHARED FOOTER
+       ======================================================================== -->
+  <footer class="bg-charcoal-dark border-t border-white/10 text-offwhite/70 py-16 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 border border-white/30 rounded flex items-center justify-center font-bold text-xs bg-navy text-lavender">
+            ES
+          </div>
+          <span class="text-base font-bold tracking-wider uppercase text-offwhite">EDUSEEK DISCOVERY ENGINE</span>
+        </div>
+        <div class="flex flex-wrap gap-6 text-xs">
+          <a href="index.html" class="hover:text-lavender">Home</a>
+          <a href="programme.html?id=online-mba" class="hover:text-lavender">Online MBA</a>
+          <a href="programme.html?id=online-mca" class="hover:text-lavender">Online MCA</a>
+          <a href="index.html#regulations" class="hover:text-lavender">UGC Gazette 2020</a>
+          <a href="javascript:void(0)" onclick="openCompareModal()" class="hover:text-lavender">Compare Tray</a>
+        </div>
+      </div>
+      <div class="pt-6 text-center text-white/40 text-[11px]">
+        © 2026 EduSeek. Impartial higher-education aggregator for Indian learners. All university marks belong to their respective entities.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Compare Tray Bar -->
+  <div id="compareTray">
+    <div class="p-3 sm:p-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-lg bg-lavender text-navy font-bold text-xs flex items-center justify-center flex-shrink-0">
+          <span id="compareCountBadge">0</span>/3
+        </span>
+        <div class="hidden sm:block">
+          <span class="text-xs font-semibold text-white block">Comparison Tray</span>
+          <span class="text-[10px] text-white/60">Inspect fees, approvals, EMI & syllabus</span>
+        </div>
+      </div>
+      <div id="trayItemsList" class="flex items-center gap-2 overflow-x-auto max-w-[50%]"></div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="trayClearBtn" class="text-[11px] text-white/50 hover:text-red-400 px-2 py-1">Clear</button>
+        <button id="trayCompareBtn" class="px-4 py-2 bg-lavender hover:bg-white text-navy text-xs font-bold uppercase tracking-wider rounded transition">
+          COMPARE NOW
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Modal -->
+  <div id="compareModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div id="compareModalContent"></div>
+    </div>
+  </div>
+
+  <!-- Lead Modal -->
+  <div id="leadModal" class="modal-overlay">
+    <div class="modal-sheet max-w-lg">
+      <div class="p-6 md:p-8">
+        <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+          <div>
+            <span class="label-tracking text-lavender">DIRECT ADMISSION CELL</span>
+            <h3 class="text-xl font-bold text-white mt-1">Get University Information & 0% EMI</h3>
+          </div>
+          <button onclick="closeLeadModal()" class="text-white/40 hover:text-white text-lg">✕</button>
+        </div>
+        <form id="leadCaptureForm" class="space-y-4">
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Full Name *</label>
+            <input type="text" required placeholder="Enter student / professional name" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Mobile Number *</label>
+              <input type="tel" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+            </div>
+            <div>
+              <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Email Address *</label>
+              <input type="email" required placeholder="name@email.com" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+            </div>
+          </div>
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Target Programme</label>
+            <input type="text" id="leadPrefProgramme" placeholder="e.g. Online MBA" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">University</label>
+            <input type="text" id="leadPrefUniv" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <button type="submit" class="w-full py-3.5 bg-lavender text-navy font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-white transition mt-2">
+            SUBMIT ENQUIRY FOR DIRECT ADMISSION
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    let currentUniv = null;
+    let activeProgFilter = "ALL";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Parse query param or default to Manipal
+      const params = new URLSearchParams(window.location.search);
+      const univId = params.get("id") || "manipal-jaipur";
+      currentUniv = getUniversityById(univId);
+      
+      renderUniversityPage();
+      renderUnivSwitcherBar();
+    });
+
+    function renderUnivSwitcherBar() {
+      const bar = document.getElementById("univSwitcherBar");
+      if (!bar) return;
+      bar.innerHTML = EDU_DATA.universities.map(u => `
+        <a 
+          href="university.html?id=${u.id}" 
+          class="px-3 py-1 rounded border text-[11px] font-semibold whitespace-nowrap transition ${u.id === currentUniv.id ? 'border-lavender bg-lavender text-navy' : 'border-white/20 text-white/70 hover:border-white'}"
+        >
+          [${u.initials}] ${u.shortName}
+        </a>
+      `).join("");
+    }
+
+    function renderUniversityPage() {
+      if (!currentUniv) return;
+
+      document.title = `${currentUniv.name} — Review, Approvals, Fees & Placements | EduSeek`;
+      
+      // Banner and basic info
+      document.getElementById("univBannerImg").src = currentUniv.bannerImage;
+      document.getElementById("univLogoBox").textContent = currentUniv.initials;
+      document.getElementById("univTitle").textContent = currentUniv.name;
+      document.getElementById("univMeta").innerHTML = `
+        <span>📍 ${currentUniv.location}</span> • 
+        <span>Estd. ${currentUniv.established}</span> • 
+        <span class="text-amber-300">★ ${currentUniv.rating} (${currentUniv.reviewsCount.toLocaleString('en-IN')} Reviews)</span>
+      `;
+      document.getElementById("univOverviewShort").textContent = currentUniv.overview;
+
+      // Approvals in header
+      document.getElementById("univHeaderApprovals").innerHTML = currentUniv.approvals.map(a => `
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white border border-white/20">
+          ${a}
+        </span>
+      `).join("");
+
+      // Snapshot card
+      document.getElementById("univNaacStat").textContent = currentUniv.accreditation;
+      document.getElementById("univNirfStat").textContent = currentUniv.nirfRank;
+      document.getElementById("univAvgCtc").textContent = currentUniv.avgCtc;
+      document.getElementById("univHighestCtc").textContent = currentUniv.highestCtc;
+
+      // Overview section
+      document.getElementById("univFullOverview").innerHTML = `
+        <p>${currentUniv.overview}</p>
+        <p><strong>Pedagogy Mode:</strong> ${currentUniv.mode}</p>
+        <p><strong>Degree Recognition:</strong> ${currentUniv.degreeValidity}</p>
+      `;
+      document.getElementById("sideNaac").textContent = currentUniv.accreditation;
+      document.getElementById("sideFeeRange").textContent = currentUniv.feesRange;
+
+      // Sticky bottom bar
+      document.getElementById("stickyBottomLogo").textContent = currentUniv.initials;
+      document.getElementById("stickyBottomTitle").textContent = currentUniv.shortName;
+      document.getElementById("stickyBottomFee").textContent = `Fees: ${currentUniv.feesRange} • 0% EMI available`;
+
+      // Approvals grid
+      renderApprovalsGrid();
+
+      // Programmes table
+      renderProgrammesTable();
+
+      // Admission timeline
+      renderAdmissionTimeline();
+
+      // LMS Features
+      renderLmsFeatures();
+
+      // Recruiters
+      renderRecruiters();
+
+      // Similar universities
+      renderSimilarUniversities();
+    }
+
+    function renderApprovalsGrid() {
+      const container = document.getElementById("univApprovalsGrid");
+      if (!container) return;
+
+      const approvalCards = [
+        { name: "UGC-DEB Entitlement", desc: "Formally granted under UGC (ODL & Online Programmes) Regulations. Zero questions on certificate legality.", status: "Verified 2026" },
+        { name: currentUniv.accreditation, desc: "Highest tier NAAC evaluation reflecting teacher-to-student ratio, research, and syllabus modernism.", status: "NAAC Standard" },
+        { name: "AICTE Recognition", desc: "Council approval confirming technical & management curriculum conforms to national engineering/MBA standards.", status: "Statutory" },
+        { name: currentUniv.nirfRank, desc: "National Institutional Ranking Framework official rank published by the Ministry of Education.", status: "NIRF MoE" },
+        { name: "WES & International AIU", desc: "Recognized by World Education Services (WES) for Canadian/US immigration PR and overseas Master's degrees.", status: "Global Validity" },
+        { name: "Degree Gazette Equivalence", desc: "Accepted nationwide by PSUs, State PSCs, UPSC, and Fortune 500 multinationals.", status: "Legal Gazette" }
+      ];
+
+      container.innerHTML = approvalCards.map(c => `
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-lavender transition">
+          <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-lavender/20 text-lavender rounded mb-3 inline-block">
+            ${c.status}
+          </span>
+          <h4 class="text-base font-bold text-white mb-2">${c.name}</h4>
+          <p class="text-xs text-white/70 leading-relaxed">${c.desc}</p>
+        </div>
+      `).join("");
+    }
+
+    function setUnivProgFilter(filter) {
+      activeProgFilter = filter;
+      document.getElementById("univProgTabAll").className = filter === 'ALL' ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-lavender text-navy" : "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white";
+      document.getElementById("univProgTabPG").className = filter === 'PG' ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-lavender text-navy" : "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white";
+      document.getElementById("univProgTabUG").className = filter === 'UG' ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider bg-lavender text-navy" : "px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white";
+      renderProgrammesTable();
+    }
+
+    function renderProgrammesTable() {
+      const tbody = document.getElementById("univProgrammesTableBody");
+      if (!tbody) return;
+
+      // Find all programmes that this university offers
+      const matching = [];
+      EDU_DATA.programmes.forEach(prog => {
+        if (activeProgFilter !== "ALL" && prog.level !== activeProgFilter) return;
+
+        const off = prog.offerings.find(o => o.universityId === currentUniv.id);
+        if (off) {
+          matching.push({ prog, off });
+        }
+      });
+
+      if (matching.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-white/50">No ${activeProgFilter} programmes listed for this university currently.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = matching.map(m => `
+        <tr class="hover:bg-white/5 transition">
+          <td class="py-4 px-6">
+            <span class="font-bold text-white block text-sm">${m.prog.name}</span>
+            <span class="text-[11px] text-lavender">${m.off.popularSpecs ? m.off.popularSpecs.join(", ") : 'Core Specialisations'}</span>
+          </td>
+          <td class="py-4 px-4 text-white/80 whitespace-nowrap">
+            <span class="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold mr-1">${m.prog.level}</span>
+            ${m.off.duration}
+          </td>
+          <td class="py-4 px-4 font-bold text-white whitespace-nowrap">
+            ${m.off.feeDisplay}
+          </td>
+          <td class="py-4 px-4 text-lavender font-semibold whitespace-nowrap">
+            ${m.off.emi}
+          </td>
+          <td class="py-4 px-6 text-white/70 max-w-xs text-[11px] leading-relaxed">
+            ${m.prog.eligibility}
+          </td>
+          <td class="py-4 px-6 text-right whitespace-nowrap">
+            <div class="flex items-center justify-end gap-2">
+              <button 
+                onclick="triggerAddToCompare({
+                  id: '${m.prog.id}-${currentUniv.id}',
+                  programmeId: '${m.prog.id}',
+                  universityId: '${currentUniv.id}',
+                  type: 'offering',
+                  name: '${m.prog.shortName} (${currentUniv.initials})',
+                  universityName: '${currentUniv.name}',
+                  fee: '${m.off.feeDisplay}',
+                  emi: '${m.off.emi}',
+                  naac: '${m.off.naac}'
+                })"
+                class="px-2.5 py-1.5 border border-white/20 hover:border-lavender text-white hover:text-lavender text-[10px] font-semibold uppercase tracking-wider rounded"
+              >
+                + Compare
+              </button>
+              <a 
+                href="programme.html?id=${m.prog.id}&univ=${currentUniv.id}" 
+                class="px-3 py-1.5 bg-lavender hover:bg-white text-navy text-[10px] font-bold uppercase tracking-wider rounded transition"
+              >
+                Inspect →
+              </a>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderAdmissionTimeline() {
+      const container = document.getElementById("univAdmissionTimeline");
+      if (!container) return;
+      container.innerHTML = currentUniv.admissionSteps.map(s => `
+        <div class="bg-white p-6 rounded-2xl border border-charcoal/15 shadow-sm relative">
+          <span class="text-3xl font-light text-navy/30 block mb-2">${s.step}</span>
+          <h4 class="text-sm font-bold text-charcoal mb-2">${s.title}</h4>
+          <p class="text-xs text-charcoal/70 leading-relaxed">${s.desc}</p>
+        </div>
+      `).join("");
+    }
+
+    function renderLmsFeatures() {
+      const container = document.getElementById("univLmsFeaturesList");
+      if (!container) return;
+      container.innerHTML = currentUniv.lmsFeatures.map(f => `
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+          <span class="text-lavender mt-0.5">✦</span>
+          <span>${f}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderRecruiters() {
+      const container = document.getElementById("univRecruitersList");
+      if (!container) return;
+      document.getElementById("placeAvgCtc").textContent = currentUniv.avgCtc;
+      document.getElementById("placeHighCtc").textContent = currentUniv.highestCtc;
+
+      container.innerHTML = currentUniv.hiringPartners.map(p => `
+        <span class="px-5 py-3 rounded-xl bg-[#1b253e] border border-white/10 text-xs font-semibold tracking-wider text-white shadow-sm">
+          ${p}
+        </span>
+      `).join("");
+    }
+
+    function renderSimilarUniversities() {
+      const container = document.getElementById("similarUnivGrid");
+      if (!container) return;
+
+      const others = EDU_DATA.universities.filter(u => u.id !== currentUniv.id).slice(0, 3);
+      container.innerHTML = others.map(u => `
+        <div class="bg-charcoal-card border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-lavender transition">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-lg bg-navy border border-white/20 text-white font-bold text-xs flex items-center justify-center">
+                ${u.initials}
+              </div>
+              <span class="text-xs text-amber-400">★ ${u.rating}</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1">${u.name}</h4>
+            <p class="text-xs text-white/50 mb-3">${u.location} • ${u.accreditation}</p>
+            <p class="text-xs text-white/70 line-clamp-2 mb-4">${u.overview}</p>
+            <div class="p-3 bg-[#1b253e] rounded-lg text-xs mb-4">
+              <span class="text-white/50">Fee Range: </span>
+              <span class="font-bold text-lavender">${u.feesRange}</span>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between gap-2">
+            <button 
+              onclick="triggerAddToCompare({
+                id: '${u.id}',
+                type: 'university',
+                name: '${u.name}',
+                fee: '${u.feesRange}',
+                naac: '${u.accreditation}',
+                rating: ${u.rating}
+              })"
+              class="flex-1 py-2 rounded border border-white/20 text-white hover:border-lavender hover:text-lavender text-[11px] font-semibold uppercase tracking-wider"
+            >
+              + Compare
+            </button>
+            <a href="university.html?id=${u.id}" class="flex-1 py-2 bg-lavender text-navy text-[11px] font-bold uppercase tracking-wider rounded text-center hover:bg-white transition">
+              Inspect →
+            </a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function handleUnivCompareClick() {
+      if (!currentUniv) return;
+      triggerAddToCompare({
+        id: currentUniv.id,
+        type: 'university',
+        name: currentUniv.name,
+        fee: currentUniv.feesRange,
+        naac: currentUniv.accreditation,
+        rating: currentUniv.rating
+      });
+    }
+  </script>
+</body>
+</html>

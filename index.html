@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UniScope — Discover Your Path | Virtual Campus & Higher-Ed Discovery</title>
+    <meta name="description" content="UniScope Virtual Campus discovery and comparison engine. Verified university degrees, transparent fees, 0% EMI, and photographic campus tours." />
+    <script>
+      // When opened directly via file:// in Windows File Manager, load the standalone single-file bundle in dist/
+      if (window.location.protocol === 'file:' && !window.location.pathname.includes('/dist/')) {
+        window.location.replace('./dist/index.html' + window.location.hash + window.location.search);
+      }
+    </script>
+    <!-- Google Fonts: Cormorant Garamond (light display serif) & Inter (clean sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Pannellum 360 Panorama Viewer CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  </head>
+  <body class="bg-dark text-white antialiased selection:bg-mint selection:text-ink overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

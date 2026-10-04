@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme Inspection — EduSeek India</title>
+  <meta name="description" content="In-depth syllabus, fees, 0% EMI, specialisations, and head-to-head comparison for accredited Indian online degrees.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#243151',
+            beige: '#ddddd3',
+            charcoal: '#262a2d',
+            offwhite: '#f4f3ee',
+            lavender: '#a99cf5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-charcoal text-offwhite antialiased selection:bg-lavender selection:text-navy">
+
+  <!-- ========================================================================
+       SHARED HEADER
+       ======================================================================== -->
+  <header id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/10 bg-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Left: Logo in a thin-bordered box -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 border border-white/30 rounded flex items-center justify-center font-bold tracking-widest text-sm bg-navy group-hover:border-lavender group-hover:text-lavender transition-colors">
+            ES
+          </div>
+          <div>
+            <span class="text-xl font-bold tracking-wider uppercase text-offwhite block">EDUSEEK</span>
+            <span class="text-[9px] tracking-widest uppercase text-lavender block -mt-1 font-medium">DISCOVERY ✦ COMPARE</span>
+          </div>
+        </a>
+
+        <!-- Center: Nav links -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="index.html#discoveryPath" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">EXPLORE DEGREES</a>
+          <a href="index.html#marketplace" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">FIND & FILTER</a>
+          <a href="university.html" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">UNIVERSITIES</a>
+          <a href="programme.html" class="label-tracking text-lavender font-bold transition-colors">PROGRAMMES</a>
+          <a href="index.html#regulations" class="label-tracking text-offwhite/80 hover:text-lavender transition-colors">UGC NORMS</a>
+        </nav>
+
+        <!-- Right: Outlined Action Buttons -->
+        <div class="flex items-center gap-3">
+          <button id="navCompareBtn" class="btn-outline-light px-3.5 py-2 rounded text-xs label-tracking flex items-center gap-2">
+            <span>COMPARE</span>
+            <span id="navCompareCount" class="w-4 h-4 rounded-full bg-lavender text-navy text-[10px] font-bold flex items-center justify-center">0</span>
+          </button>
+          
+          <button onclick="openLeadModal('Programme Top Apply', currentProg.name)" class="hidden sm:inline-flex btn-solid-lavender px-4 py-2 rounded text-xs label-tracking">
+            APPLY NOW
+          </button>
+
+          <button id="mobileMenuBtn" class="md:hidden text-offwhite/80 hover:text-white p-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       PROGRAMME SWITCHER QUICK BAR (AGGREGATOR NAVIGATION)
+       ======================================================================== -->
+  <div class="pt-24 pb-4 bg-navy border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2 text-white/60">
+        <span class="label-tracking-sm text-lavender">SELECT DEGREE TO INSPECT:</span>
+      </div>
+      <div class="flex items-center gap-2 overflow-x-auto pb-1" id="progSwitcherBar">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       HERO BANNER — Degree Name, University Brand, Fee, EMI, CTAs
+       In Navy (#243151)
+       ======================================================================== -->
+  <section class="relative pt-12 pb-16 bg-navy border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top badges -->
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span id="heroLevelTag" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-lavender/20 text-lavender border border-lavender/30">
+          POSTGRADUATE DEGREE
+        </span>
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+          100% UGC-DEB ENTITLED
+        </span>
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white/80">
+          AICTE RECOGNIZED
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <div class="lg:col-span-8">
+          <h1 id="heroProgTitle" class="text-3xl sm:text-4xl md:text-5xl font-light text-white leading-tight mb-3">
+            Online Master of Business Administration (MBA)
+          </h1>
+
+          <!-- Active University context pill -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-charcoal border border-white/15 mb-6 text-xs">
+            <span class="text-white/60">Selected University:</span>
+            <select id="heroUnivSelect" onchange="changeActiveOffering(this.value)" class="bg-transparent text-lavender font-bold focus:outline-none cursor-pointer">
+              <!-- Dynamically populated offering options -->
+            </select>
+          </div>
+
+          <p id="heroProgDesc" class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-3xl mb-8">
+            India's most sought-after executive online degree. Designed to impart strategic leadership, financial modeling, marketing innovation, and corporate strategy while allowing you to retain your full-time job.
+          </p>
+
+          <!-- Quick Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 mb-8 text-xs">
+            <div>
+              <span class="text-white/50 uppercase tracking-wider text-[10px] block">Duration</span>
+              <span id="heroDuration" class="font-bold text-white text-sm">2 Years (4 Sem)</span>
+            </div>
+            <div>
+              <span class="text-white/50 uppercase tracking-wider text-[10px] block">Total Course Fee</span>
+              <span id="heroFee" class="font-bold text-lavender text-sm">₹1,75,000</span>
+            </div>
+            <div>
+              <span class="text-white/50 uppercase tracking-wider text-[10px] block">Monthly 0% EMI</span>
+              <span id="heroEmi" class="font-bold text-emerald-400 text-sm">₹5,417 / mo</span>
+            </div>
+            <div>
+              <span class="text-white/50 uppercase tracking-wider text-[10px] block">Examination</span>
+              <span class="font-bold text-white text-sm">Remote Proctored</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openLeadModal('Direct Programme Apply', currentProg.name)" class="btn-solid-lavender px-6 py-3 rounded text-xs label-tracking">
+              ENROL / APPLY NOW
+            </button>
+            <button id="heroAddCompareBtn" onclick="handleProgCompareClick()" class="btn-outline-light px-5 py-3 rounded text-xs label-tracking flex items-center gap-2">
+              <span>+ ADD TO COMPARE</span>
+            </button>
+            <button onclick="openLeadModal('Curriculum Download', currentProg.name)" class="btn-outline-light px-5 py-3 rounded text-xs label-tracking">
+              DOWNLOAD SYLLABUS PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Admissions & Eligibility Card -->
+        <div class="lg:col-span-4 bg-charcoal-card/90 backdrop-blur border border-white/15 rounded-2xl p-6 shadow-2xl">
+          <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+            <span class="label-tracking text-lavender text-xs">ELIGIBILITY CRITERIA</span>
+            <span class="text-[10px] text-emerald-400 font-bold">Direct Admission</span>
+          </div>
+
+          <div class="space-y-4 text-xs text-white/80 leading-relaxed mb-6">
+            <p id="heroEligibilityText">
+              Graduation in any stream with minimum 50% marks (45% for reserved category) from a recognized university.
+            </p>
+            <div class="p-3 bg-navy/80 rounded-xl border border-white/10 text-[11px] space-y-1.5">
+              <div class="flex items-center gap-2 text-white">
+                <span class="text-emerald-400">✓</span> <span>No CAT / MAT / GMAT score mandatory</span>
+              </div>
+              <div class="flex items-center gap-2 text-white">
+                <span class="text-emerald-400">✓</span> <span>Valid for corporate appraisals & UPSC</span>
+              </div>
+              <div class="flex items-center gap-2 text-white">
+                <span class="text-emerald-400">✓</span> <span>Final year graduation candidates can apply provisionally</span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openLeadModal('Eligibility Check', currentProg.name)" class="w-full py-3 bg-lavender text-navy text-xs font-bold uppercase tracking-wider rounded hover:bg-white transition">
+            CHECK MY ADMISSION ELIGIBILITY
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       STICKY SUB-NAVIGATION TABS
+       ======================================================================== -->
+  <div class="sticky-subnav bg-navy/95 border-b border-white/15 px-4">
+    <div class="max-w-7xl mx-auto flex items-center gap-1 overflow-x-auto py-2">
+      <a href="#tab-highlights" class="tab-pill active">OVERVIEW & USPs</a>
+      <a href="#tab-specialisations" class="tab-pill">SPECIALISATIONS</a>
+      <a href="#tab-curriculum" class="tab-pill">SEMESTER SYLLABUS</a>
+      <a href="#tab-fee-emi" class="tab-pill">FEES & 0% EMI</a>
+      <a href="#tab-pedagogy" class="tab-pill">LMS & PROCTORING</a>
+      <a href="#tab-careers" class="tab-pill">CAREER ROLES & SALARY</a>
+      <a href="#tab-matrix" class="tab-pill">HEAD-TO-HEAD COMPARISON</a>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       TAB SECTION 1: PROGRAMME HIGHLIGHTS & ACCREDITATION
+       In Warm Beige (#ddddd3)
+       ======================================================================== -->
+  <section id="tab-highlights" class="bg-beige text-charcoal py-20 border-b border-charcoal/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-8">
+          <span class="label-tracking text-navy/70 block mb-2">CURRICULUM PURPOSE</span>
+          <h2 class="font-display-mid text-charcoal mb-4">Why Pursue This Programme?</h2>
+          <p id="progFullDesc" class="text-sm text-charcoal/80 leading-relaxed mb-6">
+            Designed for forward-thinking Indian professionals, this programme bridges academic theory and industry demands. Courses are delivered via flexible video modules, case studies from Harvard and Ivey, and weekly live masterclasses with senior executives.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <div class="p-5 bg-white/80 rounded-xl border border-charcoal/15">
+              <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">Flexible Schedule</h4>
+              <p class="text-xs text-charcoal/70 leading-relaxed">Study 8-10 hours a week on weekends or late evenings. Attend live or watch recorded lectures anytime.</p>
+            </div>
+            <div class="p-5 bg-white/80 rounded-xl border border-charcoal/15">
+              <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">Global Credentialing</h4>
+              <p class="text-xs text-charcoal/70 leading-relaxed">Bundled certifications from Coursera, Harvard ManageMentor, or ACCA UK integrated into the coursework.</p>
+            </div>
+            <div class="p-5 bg-white/80 rounded-xl border border-charcoal/15">
+              <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">100% Online Examinations</h4>
+              <p class="text-xs text-charcoal/70 leading-relaxed">Take proctored exams from your desk at home without visiting any regional study center.</p>
+            </div>
+            <div class="p-5 bg-white/80 rounded-xl border border-charcoal/15">
+              <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">Dedicated Career Support</h4>
+              <p class="text-xs text-charcoal/70 leading-relaxed">Virtual placement drives, resume optimization, and 1-on-1 mock interviews with industry HR leads.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="bg-white rounded-2xl p-6 border border-charcoal/15 shadow-sm space-y-4">
+            <span class="label-tracking text-navy">BEST SUITED FOR</span>
+            <div id="progBestFor" class="text-xs text-charcoal/80 leading-relaxed">
+              Working professionals, entrepreneurs, and ambitious graduates seeking fast managerial promotions and salary increments.
+            </div>
+
+            <div class="pt-4 border-t border-charcoal/10">
+              <span class="label-tracking text-navy block mb-2">DEGREE STATUS</span>
+              <p class="text-xs text-charcoal/70 leading-relaxed">
+                Equivalent to conventional on-campus degree under UGC (Open and Distance Learning & Online Programmes) Regulations 2020.
+              </p>
+            </div>
+
+            <button onclick="openLeadModal('Syllabus Download', currentProg.name)" class="w-full py-3 bg-navy text-offwhite text-xs font-bold uppercase tracking-wider rounded hover:bg-navy-dark transition">
+              DOWNLOAD FULL BROCHURE
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 2: INTERACTIVE SPECIALISATIONS SWITCHER
+       In Navy (#243151)
+       Clicking a specialization modifies syllabus highlights and career roles
+       ======================================================================== -->
+  <section id="tab-specialisations" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="label-tracking text-lavender block mb-2">ELECTIVE TRACKS</span>
+        <h2 class="font-display-large text-offwhite">Specialisations & Domain Electives</h2>
+        <p class="text-offwhite/60 text-sm mt-2">Select a specialisation below to view its specific focus areas, industry applications, and target career titles.</p>
+      </div>
+
+      <!-- Specialisation Pills Switcher -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="specsPillsContainer">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Active Specialisation Detail Display -->
+      <div class="max-w-4xl mx-auto bg-charcoal-card border border-white/15 rounded-2xl p-8 shadow-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 mb-6">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-lavender block mb-1">SELECTED TRACK</span>
+            <h3 id="activeSpecTitle" class="text-2xl font-light text-white">Marketing Management</h3>
+          </div>
+          <button onclick="openLeadModal('Spec Enquiry', document.getElementById('activeSpecTitle').textContent)" class="btn-solid-lavender px-4 py-2 rounded text-xs label-tracking">
+            INQUIRE ABOUT THIS TRACK
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs text-white/80">
+          <div>
+            <h4 class="label-tracking text-white mb-3">KEY DOMAIN SUBJECTS</h4>
+            <ul class="space-y-2.5" id="specSubjectsList">
+              <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Consumer Behaviour & Neuromarketing</span></li>
+              <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Digital Marketing & SEO/SEM Strategies</span></li>
+              <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Brand Management & Integrated Comms</span></li>
+              <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Sales & Distribution Channel Architecture</span></li>
+              <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Marketing Analytics & ROI Modeling</span></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="label-tracking text-white mb-3">CAREER PATHWAYS</h4>
+            <div class="space-y-3" id="specCareerList">
+              <div class="p-3 rounded-lg bg-[#1b253e] border border-white/5">
+                <span class="font-bold text-white block">Product Marketing Manager</span>
+                <span class="text-[11px] text-emerald-400">₹9.0 - 16.0 LPA Average</span>
+              </div>
+              <div class="p-3 rounded-lg bg-[#1b253e] border border-white/5">
+                <span class="font-bold text-white block">Digital Growth Strategist</span>
+                <span class="text-[11px] text-emerald-400">₹8.5 - 14.5 LPA Average</span>
+              </div>
+              <div class="p-3 rounded-lg bg-[#1b253e] border border-white/5">
+                <span class="font-bold text-white block">Regional Brand Manager</span>
+                <span class="text-[11px] text-emerald-400">₹10.0 - 18.0 LPA Average</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 3: SEMESTER-WISE CURRICULUM
+       In Charcoal (#262a2d)
+       ======================================================================== -->
+  <section id="tab-curriculum" class="bg-charcoal py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">ACADEMIC RIGOR</span>
+          <h2 class="font-display-large text-offwhite">Semester-Wise Syllabus</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Comprehensive curriculum structured in accordance with the National Education Policy (NEP 2020) and UGC credit framework.</p>
+        </div>
+        <button onclick="openLeadModal('Syllabus PDF', currentProg.name)" class="mt-4 md:mt-0 btn-outline-light px-4 py-2 rounded text-xs label-tracking">
+          DOWNLOAD COMPLETE SYLLABUS PDF
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="semesterGrid">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 4: FEES & ZERO-COST EMI FINANCING
+       In Warm Beige (#ddddd3)
+       ======================================================================== -->
+  <section id="tab-fee-emi" class="bg-beige text-charcoal py-20 border-b border-charcoal/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6">
+          <span class="label-tracking text-navy/70 block mb-2">TRANSPARENT COSTS</span>
+          <h2 class="font-display-large text-charcoal mb-4">Fee Structure & Flexible Financing</h2>
+          <p class="text-charcoal/70 text-sm leading-relaxed mb-6">
+            Pay semester-wise or split your entire programme fee into easy monthly EMIs with 0% interest and zero down payment through partner student financial platforms.
+          </p>
+
+          <div class="space-y-4 text-xs text-charcoal/80">
+            <div class="p-4 bg-white rounded-xl border border-charcoal/15">
+              <span class="font-bold text-navy block text-sm mb-1">Semester Installment Option</span>
+              <span>Pay 4 equal installments of approximately ₹43,750 per semester before each term begins.</span>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-charcoal/15">
+              <span class="font-bold text-navy block text-sm mb-1">0% Interest Monthly EMI</span>
+              <span>Starting from ₹5,417 / month with paperless DigiLocker e-KYC. Zero processing surcharges.</span>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-charcoal/15">
+              <span class="font-bold text-navy block text-sm mb-1">Alumni & Defence Scholarships</span>
+              <span>10% to 20% tuition fee concessions for armed forces personnel, female candidates, and merit holders.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="bg-white rounded-2xl p-8 border border-charcoal/15 shadow-xl">
+            <h3 class="label-tracking text-navy mb-6">FEE BREAKDOWN SUMMARY</h3>
+
+            <div class="space-y-4 text-xs">
+              <div class="flex justify-between items-center pb-3 border-b border-charcoal/10">
+                <span class="text-charcoal/70">Registration & Onboarding</span>
+                <span class="font-bold text-charcoal">₹1,500 (Adjustable)</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-charcoal/10">
+                <span class="text-charcoal/70">Tuition Fee (Per Semester)</span>
+                <span id="tabSemFee" class="font-bold text-charcoal">₹43,750 / sem</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-charcoal/10">
+                <span class="text-charcoal/70">Examination Fee</span>
+                <span class="font-bold text-emerald-700">Included in Tuition</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-charcoal/10">
+                <span class="text-charcoal/70">Digital Library & Coursera Access</span>
+                <span class="font-bold text-emerald-700">₹0 (Complimentary)</span>
+              </div>
+              <div class="flex justify-between items-center pt-2">
+                <span class="text-sm font-bold text-navy">Total Course Investment</span>
+                <span id="tabTotalFee" class="text-xl font-bold text-navy">₹1,75,000</span>
+              </div>
+            </div>
+
+            <button onclick="openLeadModal('EMI Pre-Approval', currentProg.name)" class="w-full mt-6 py-3.5 bg-navy text-offwhite text-xs font-bold uppercase tracking-wider rounded hover:bg-navy-dark transition">
+              APPLY FOR 0% EMI LOAN
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 5: LEARNING METHODOLOGY & PROCTORING
+       In Navy (#243151)
+       ======================================================================== -->
+  <section id="tab-pedagogy" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="label-tracking text-lavender block mb-2">PEDAGOGICAL ARCHITECTURE</span>
+        <h2 class="font-display-large text-offwhite">How You Will Learn</h2>
+        <p class="text-offwhite/60 text-sm mt-2">Built for active corporate professionals with balanced asynchronous and synchronous study.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-3xl text-lavender mb-3">01</div>
+          <h3 class="text-base font-bold text-white mb-2">Bite-Sized Video Modules</h3>
+          <p class="text-xs text-white/70 leading-relaxed">Recorded micro-lectures (15-20 mins each) crafted by senior faculty that you can watch on your commute or free hours.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-3xl text-lavender mb-3">02</div>
+          <h3 class="text-base font-bold text-white mb-2">Live Weekend Masterclasses</h3>
+          <p class="text-xs text-white/70 leading-relaxed">Interactive Saturday & Sunday webinars with CXOs, case studies, and live Q&A sessions.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-3xl text-lavender mb-3">03</div>
+          <h3 class="text-base font-bold text-white mb-2">Continuous Assessment</h3>
+          <p class="text-xs text-white/70 leading-relaxed">30% continuous evaluation via online quizzes, projects, and case submissions; 70% proctored semester end exams.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 6: CAREER ROLES & SALARIES
+       In Charcoal (#262a2d)
+       ======================================================================== -->
+  <section id="tab-careers" class="bg-charcoal py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">CAREER ROI</span>
+          <h2 class="font-display-large text-offwhite">Target Career Roles & Packages</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Verified salary bands for graduates transitioning into leadership roles across top Indian metros.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="careerRolesGrid">
+        <!-- Populated by script -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB SECTION 7: HEAD-TO-HEAD COMPARISON MATRIX
+       Compare this MBA across Manipal vs Amity vs NMIMS vs Jain
+       In Navy (#243151)
+       ======================================================================== -->
+  <section id="tab-matrix" class="bg-navy py-20 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="label-tracking text-lavender block mb-2">AGGREGATOR BENCHMARK</span>
+          <h2 class="font-display-large text-offwhite">Compare with Alternative Universities</h2>
+          <p class="text-offwhite/60 text-sm max-w-xl mt-2">Contrast fees, NAAC grades, 0% EMI, and distinct USPs for this exact programme across top entitled institutions.</p>
+        </div>
+        <button onclick="openCompareModal()" class="mt-4 md:mt-0 btn-solid-lavender px-5 py-2.5 rounded text-xs label-tracking">
+          CUSTOM COMPARISON TRAY
+        </button>
+      </div>
+
+      <div class="editorial-table-wrap bg-charcoal-card border border-white/10 rounded-2xl">
+        <table class="w-full text-left border-collapse min-w-[760px]">
+          <thead>
+            <tr class="border-b border-white/10 text-white/50 text-[11px] uppercase tracking-wider bg-white/5">
+              <th class="py-4 px-6">University</th>
+              <th class="py-4 px-4">NAAC Grade</th>
+              <th class="py-4 px-4">Total Fee</th>
+              <th class="py-4 px-4">0% EMI</th>
+              <th class="py-4 px-6">Distinct USP</th>
+              <th class="py-4 px-6 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="matrixTableBody" class="divide-y divide-white/10 text-xs">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PERSISTENT BOTTOM ENQUIRY STRIP
+       ======================================================================== -->
+  <div class="bg-charcoal-dark border-t border-white/15 py-6 sticky bottom-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-lavender text-navy font-bold text-xs flex items-center justify-center" id="stickyBottomProgInitials">
+          MBA
+        </div>
+        <div>
+          <span class="text-xs font-bold text-white block" id="stickyBottomProgTitle">Online MBA</span>
+          <span class="text-[10px] text-white/60" id="stickyBottomProgFee">Fee: ₹1,75,000 • EMI from ₹5,417/mo</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <button id="stickyProgCompareBtn" onclick="handleProgCompareClick()" class="flex-1 sm:flex-none btn-outline-light px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-wider">
+          + Compare
+        </button>
+        <button onclick="openLeadModal('Sticky Programme Apply', currentProg.name)" class="flex-1 sm:flex-none btn-solid-lavender px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider">
+          APPLY / ENROL NOW
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Footer -->
+  <footer class="bg-charcoal-dark border-t border-white/10 text-offwhite/70 py-16 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 border border-white/30 rounded flex items-center justify-center font-bold text-xs bg-navy text-lavender">
+            ES
+          </div>
+          <span class="text-base font-bold tracking-wider uppercase text-offwhite">EDUSEEK DISCOVERY ENGINE</span>
+        </div>
+        <div class="flex flex-wrap gap-6 text-xs">
+          <a href="index.html" class="hover:text-lavender">Home</a>
+          <a href="university.html" class="hover:text-lavender">Universities</a>
+          <a href="index.html#regulations" class="hover:text-lavender">UGC Gazette 2020</a>
+          <a href="javascript:void(0)" onclick="openCompareModal()" class="hover:text-lavender">Compare Tray</a>
+        </div>
+      </div>
+      <div class="pt-6 text-center text-white/40 text-[11px]">
+        © 2026 EduSeek. Impartial higher-education aggregator for Indian learners. All university marks belong to their respective entities.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Compare Tray -->
+  <div id="compareTray">
+    <div class="p-3 sm:p-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-lg bg-lavender text-navy font-bold text-xs flex items-center justify-center flex-shrink-0">
+          <span id="compareCountBadge">0</span>/3
+        </span>
+        <div class="hidden sm:block">
+          <span class="text-xs font-semibold text-white block">Comparison Tray</span>
+          <span class="text-[10px] text-white/60">Inspect fees, approvals, EMI & syllabus</span>
+        </div>
+      </div>
+      <div id="trayItemsList" class="flex items-center gap-2 overflow-x-auto max-w-[50%]"></div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="trayClearBtn" class="text-[11px] text-white/50 hover:text-red-400 px-2 py-1">Clear</button>
+        <button id="trayCompareBtn" class="px-4 py-2 bg-lavender hover:bg-white text-navy text-xs font-bold uppercase tracking-wider rounded transition">
+          COMPARE NOW
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Modal -->
+  <div id="compareModal" class="modal-overlay">
+    <div class="modal-sheet">
+      <div id="compareModalContent"></div>
+    </div>
+  </div>
+
+  <!-- Lead Modal -->
+  <div id="leadModal" class="modal-overlay">
+    <div class="modal-sheet max-w-lg">
+      <div class="p-6 md:p-8">
+        <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+          <div>
+            <span class="label-tracking text-lavender">DIRECT ADMISSION DESK</span>
+            <h3 class="text-xl font-bold text-white mt-1">Get Course Details & 0% EMI</h3>
+          </div>
+          <button onclick="closeLeadModal()" class="text-white/40 hover:text-white text-lg">✕</button>
+        </div>
+        <form id="leadCaptureForm" class="space-y-4">
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Your Full Name *</label>
+            <input type="text" required placeholder="Enter student / professional name" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Mobile Number *</label>
+              <input type="tel" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+            </div>
+            <div>
+              <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Email Address *</label>
+              <input type="email" required placeholder="name@email.com" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+            </div>
+          </div>
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Programme</label>
+            <input type="text" id="leadPrefProgramme" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <div>
+            <label class="text-[11px] uppercase tracking-wider text-white/60 block mb-1">Preferred University</label>
+            <input type="text" id="leadPrefUniv" class="w-full bg-white/5 border border-white/20 rounded-lg px-3.5 py-2.5 text-white placeholder-white/40 text-xs focus:outline-none focus:border-lavender">
+          </div>
+          <button type="submit" class="w-full py-3.5 bg-lavender text-navy font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-white transition mt-2">
+            SUBMIT ENQUIRY FOR DIRECT ADMISSION
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    let currentProg = null;
+    let currentOffering = null;
+    let activeSpecIndex = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const progId = params.get("id") || "online-mba";
+      const univId = params.get("univ") || "manipal-jaipur";
+
+      currentProg = getProgrammeById(progId);
+      currentOffering = currentProg.offerings.find(o => o.universityId === univId) || currentProg.offerings[0];
+
+      renderProgrammePage();
+      renderProgSwitcherBar();
+    });
+
+    function renderProgSwitcherBar() {
+      const bar = document.getElementById("progSwitcherBar");
+      if (!bar) return;
+      bar.innerHTML = EDU_DATA.programmes.map(p => `
+        <a 
+          href="programme.html?id=${p.id}&univ=${currentOffering.universityId}" 
+          class="px-3 py-1 rounded border text-[11px] font-semibold whitespace-nowrap transition ${p.id === currentProg.id ? 'border-lavender bg-lavender text-navy' : 'border-white/20 text-white/70 hover:border-white'}"
+        >
+          ${p.shortName}
+        </a>
+      `).join("");
+    }
+
+    function renderProgrammePage() {
+      if (!currentProg || !currentOffering) return;
+
+      const activeUniv = getUniversityById(currentOffering.universityId);
+      document.title = `${currentProg.name} (${activeUniv.shortName}) — Fees, Syllabus, EMI & Review | EduSeek`;
+
+      // Header fields
+      document.getElementById("heroLevelTag").textContent = `${currentProg.level === 'PG' ? 'POSTGRADUATE' : 'UNDERGRADUATE'} DEGREE`;
+      document.getElementById("heroProgTitle").textContent = currentProg.name;
+      document.getElementById("heroProgDesc").textContent = currentProg.description;
+      document.getElementById("heroDuration").textContent = currentOffering.duration;
+      document.getElementById("heroFee").textContent = currentOffering.feeDisplay;
+      document.getElementById("heroEmi").textContent = currentOffering.emi;
+      document.getElementById("heroEligibilityText").textContent = currentProg.eligibility;
+
+      // Dropdown of university offerings
+      const sel = document.getElementById("heroUnivSelect");
+      if (sel) {
+        sel.innerHTML = currentProg.offerings.map(o => {
+          const u = getUniversityById(o.universityId);
+          return `<option value="${o.universityId}" ${o.universityId === currentOffering.universityId ? 'selected' : ''}>${u.name} — ${o.feeDisplay}</option>`;
+        }).join("");
+      }
+
+      // Highlights
+      document.getElementById("progFullDesc").textContent = currentProg.description;
+      document.getElementById("progBestFor").textContent = currentProg.bestFor;
+
+      // Fees tab
+      document.getElementById("tabSemFee").textContent = `₹${Math.round(currentOffering.fee / 4).toLocaleString('en-IN')} / sem`;
+      document.getElementById("tabTotalFee").textContent = currentOffering.feeDisplay;
+
+      // Sticky Bottom
+      document.getElementById("stickyBottomProgInitials").textContent = currentProg.level;
+      document.getElementById("stickyBottomProgTitle").textContent = `${currentProg.shortName} (${activeUniv.initials})`;
+      document.getElementById("stickyBottomProgFee").textContent = `Total: ${currentOffering.feeDisplay} • EMI: ${currentOffering.emi}`;
+
+      // Render specialisations
+      renderSpecialisations();
+
+      // Render semesters
+      renderSemesters();
+
+      // Render careers
+      renderCareers();
+
+      // Render Comparison Matrix
+      renderComparisonMatrix();
+    }
+
+    function changeActiveOffering(univId) {
+      currentOffering = currentProg.offerings.find(o => o.universityId === univId) || currentProg.offerings[0];
+      renderProgrammePage();
+    }
+
+    function renderSpecialisations() {
+      const container = document.getElementById("specsPillsContainer");
+      if (!container) return;
+
+      container.innerHTML = currentProg.specialisationsList.map((s, idx) => `
+        <button 
+          onclick="selectSpec(${idx})" 
+          class="spec-pill px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition ${idx === activeSpecIndex ? 'bg-lavender text-navy border border-lavender' : 'bg-charcoal text-white/70 border border-white/15 hover:border-white'}"
+        >
+          ${s}
+        </button>
+      `).join("");
+
+      updateSpecDetails(activeSpecIndex);
+    }
+
+    function selectSpec(idx) {
+      activeSpecIndex = idx;
+      document.querySelectorAll(".spec-pill").forEach((btn, i) => {
+        if (i === idx) {
+          btn.className = "spec-pill px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition bg-lavender text-navy border border-lavender";
+        } else {
+          btn.className = "spec-pill px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition bg-charcoal text-white/70 border border-white/15 hover:border-white";
+        }
+      });
+      updateSpecDetails(idx);
+    }
+
+    function updateSpecDetails(idx) {
+      const specName = currentProg.specialisationsList[idx];
+      const titleEl = document.getElementById("activeSpecTitle");
+      if (titleEl) titleEl.textContent = specName;
+
+      // Tailor dummy subjects to that specialization
+      const subjectsList = document.getElementById("specSubjectsList");
+      if (subjectsList) {
+        subjectsList.innerHTML = `
+          <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Advanced Foundations in ${specName}</span></li>
+          <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Data Driven Decision Making & Analytics</span></li>
+          <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Industry Capstone & Corporate Case Simulations</span></li>
+          <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Emerging Trends & International Regulations</span></li>
+          <li class="flex items-center gap-2"><span class="text-lavender">✦</span> <span>Strategic Leadership & Technology Disruption</span></li>
+        `;
+      }
+    }
+
+    function renderSemesters() {
+      const grid = document.getElementById("semesterGrid");
+      if (!grid) return;
+
+      grid.innerHTML = currentProg.semesters.map(s => `
+        <div class="bg-charcoal-card border border-white/10 rounded-2xl p-6 shadow-md">
+          <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+            <span class="label-tracking text-lavender font-bold">${s.sem}</span>
+            <span class="text-[10px] text-white/40 uppercase tracking-widest">${s.core.length} Modules</span>
+          </div>
+          <ul class="space-y-2 text-xs text-white/80">
+            ${s.core.map(c => `
+              <li class="flex items-start gap-2">
+                <span class="text-lavender/60 mt-0.5">•</span>
+                <span>${c}</span>
+              </li>
+            `).join("")}
+          </ul>
+        </div>
+      `).join("");
+    }
+
+    function renderCareers() {
+      const grid = document.getElementById("careerRolesGrid");
+      if (!grid) return;
+
+      grid.innerHTML = currentProg.careerRoles.map(c => `
+        <div class="p-5 rounded-2xl bg-charcoal-card border border-white/10 hover:border-lavender transition shadow-md">
+          <h4 class="text-sm font-bold text-white mb-1">${c.role}</h4>
+          <span class="text-xs text-emerald-400 font-semibold block mb-2">${c.ctc}</span>
+          <p class="text-[11px] text-white/60 leading-relaxed">High demand across tier-1 consulting, fintech, product, and e-commerce enterprises.</p>
+        </div>
+      `).join("");
+    }
+
+    function renderComparisonMatrix() {
+      const tbody = document.getElementById("matrixTableBody");
+      if (!tbody) return;
+
+      tbody.innerHTML = currentProg.offerings.map(o => {
+        const u = getUniversityById(o.universityId);
+        const isCurrent = o.universityId === currentOffering.universityId;
+
+        return `
+          <tr class="${isCurrent ? 'bg-lavender/5' : 'hover:bg-white/5'} transition">
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded bg-navy border border-white/20 text-white font-bold text-xs flex items-center justify-center">${u.initials}</span>
+                <div>
+                  <span class="font-bold text-white block text-sm">${u.name}</span>
+                  <span class="text-[10px] text-white/50">${u.location}</span>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4 font-semibold text-white">
+              ${o.naac}
+            </td>
+            <td class="py-4 px-4 font-bold text-lavender text-sm">
+              ${o.feeDisplay}
+            </td>
+            <td class="py-4 px-4 text-white/90">
+              ${o.emi}
+            </td>
+            <td class="py-4 px-6 text-white/70 max-w-xs text-[11px] leading-relaxed">
+              ${o.usp}
+            </td>
+            <td class="py-4 px-6 text-right whitespace-nowrap">
+              <div class="flex items-center justify-end gap-2">
+                <button 
+                  onclick="triggerAddToCompare({
+                    id: '${currentProg.id}-${u.id}',
+                    programmeId: '${currentProg.id}',
+                    universityId: '${u.id}',
+                    type: 'offering',
+                    name: '${currentProg.shortName} (${u.initials})',
+                    universityName: '${u.name}',
+                    fee: '${o.feeDisplay}',
+                    emi: '${o.emi}',
+                    naac: '${o.naac}'
+                  })"
+                  class="px-2.5 py-1.5 border border-white/20 hover:border-lavender text-white hover:text-lavender text-[10px] font-semibold uppercase tracking-wider rounded"
+                >
+                  + Compare
+                </button>
+                <button 
+                  onclick="changeActiveOffering('${u.id}')"
+                  class="px-3 py-1.5 ${isCurrent ? 'bg-emerald-500/20 text-emerald-300' : 'bg-lavender text-navy'} text-[10px] font-bold uppercase tracking-wider rounded hover:bg-white transition"
+                >
+                  ${isCurrent ? 'Active View' : 'Select'}
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function handleProgCompareClick() {
+      if (!currentProg || !currentOffering) return;
+      const u = getUniversityById(currentOffering.universityId);
+      triggerAddToCompare({
+        id: `${currentProg.id}-${u.id}`,
+        programmeId: currentProg.id,
+        universityId: u.id,
+        type: 'offering',
+        name: `${currentProg.shortName} (${u.initials})`,
+        universityName: u.name,
+        fee: currentOffering.feeDisplay,
+        emi: currentOffering.emi,
+        naac: currentOffering.naac
+      });
+    }
+  </script>
+</body>
+</html>
